@@ -13,8 +13,17 @@ nx = 24;
 ny = 8;
 nz = 1;
 
-vertecies(inlet_height,free_stream_length,tunnel_height, total_length, theta)
-block(nx,ny,nz)
+vert = vertecies(inlet_height,free_stream_length,tunnel_height, total_length, theta)
+bloc = block(nx,ny,nz)
+
+inle = inlet(bloc',vert)
+outl = outlet(bloc,vert)
+tops = top(bloc,vert)
+bott = bottom(bloc,vert)
+obst = obstacles(bloc,vert)
+publish(bloc,vert,inle,outl,tops,bott,obst)
+
+
 % blocks = block(nxCylinder,nyCylinder, nz, nHorizontalWake,nVertical,nHorizontalFore)
 % [arcs] = arc(blocks,R)
 % 
@@ -62,9 +71,9 @@ v(8,2) = inlet_height-ramp_height;
 
 % Set vertecies for z axis 
 v(9:16,1:2) = v(1:8,1:2);
-for  i = 1:32
+for  i = 1:8
     v(i,3) = -0.05;
-    v(i+32,3) = 0.05;    
+    v(i+8,3) = 0.05;    
 end
 
 % openFoam Indexing
@@ -77,8 +86,6 @@ vy = v(:,2);
 plot(vx,vy,'o');
 
 end
-
-
 
 function blocks = block(nx,ny,nz)
 % nx number of cells in global x direction
@@ -131,18 +138,19 @@ for i = 1:3
 end
 end
 
-
-% 
-% function [inlets] = inlet(blocks,v)
-% inlets = [];
+function [inlets] = inlet(blocks,v)
+% % since left most block is always the same, our inlet is always the same
+% % so we can defien it here
 % left_end = min(v(:,1));
 % for i = 1:(length(blocks))
 %     if (v(blocks(i,1)+1,1) == left_end) & (v(blocks(i,4)+1,1) == left_end)
 %         inlets = [inlets; blocks(i,1) blocks(i,4)+32 blocks(i,1)+32 blocks(i,4)];
 %     end
 % end
-% end
-% % function [outlets] = outlet(blocks,v)
+inlets = [0 8 11 3];
+end
+
+function [outlets] = outlet(blocks,v)
 % outlets = [];
 % right_end = max(v(:,1));
 % for i = 1:(length(blocks))
@@ -150,10 +158,11 @@ end
 %         outlets = [outlets; blocks(i,2) blocks(i,3)+32 blocks(i,2)+32 blocks(i,3)];
 %     end
 % end
-% end
+outlets = [6 14 15 7];
+end
 
-% function [tops] = top(blocks,v)
-% 
+function [tops] = top(blocks,v)
+tops = [3 11 12 4];
 % tops = [];
 % top_end = max(v(:,2));
 % for i = 1:(length(blocks))
@@ -179,66 +188,73 @@ end
 %         cylinders = [cylinders; blocks(i,1) blocks(i,1)+8 blocks(i,2)+8 blocks(i,4)];
 %     end
 % end
-% end
-% 
-% function publish(blocks,v,arcs,inlets,outlets,tops,bottoms,cylinders)
-% 
-% fid = fopen('test.txt','wt');
-% % write header
-% fprintf(fid,'// Mesh generated on 08-Mar-2021\n');
-% fprintf(fid,'// Local directory: /Users/fbisetti/teaching/ASE347/SP-2021/OF-assignments/of2/simulations/mesh\n');
-% fprintf(fid,'// Username: fbisetti\n\n\n');
-% 
-% fprintf(fid,'// Lf (fore)  =  4.00000e+00\n');
-% fprintf(fid,'// Lw (wake)  =  6.00000e+00\n');
-% fprintf(fid,'// R  (outer) =  1.00000e+00\n');
-% fprintf(fid,'// H  (top/bottom) = 4.00000\n\n');
-% 
-% fprintf(fid,'FoamFile\n');
-% fprintf(fid,'{\n\tversion  2.0;\n\tformat   ascii;\n\tclass    dictionary;\n\tobject   blockMeshDict;\n}\n\n');
-% 
-% fprintf(fid,'convertToMeters 1.0;\n\n');
-% 
-% % write verticies
-% fprintf(fid,'verticies\n(\n');
-% fprintf(fid,'\t( %+e %+e %+e ) // %1.0f\n',v(:,1:4)');
-% fprintf(fid,');\n\n');
-% 
-% % write blocks
-% fprintf(fid,'blocks\n(\n\n');
-% fprintf(fid,'\t// block %1.0f \n\thex (%2.0f %2.0f %2.0f %2.0f %2.0f %2.0f %2.0f %2.0f) ( %2.0f %2.0f %2.0f) simpleGrading ( %+e %+e %3.1f)\n',[blocks(:,end) blocks(:,1:(end-1))]');
-% fprintf(fid,'\n);\n\n');
-% 
-% % write arcs
-% fprintf(fid,'edges\n(\n\n');
-% fprintf(fid,'arc %2.0f %2.0f ( %+e %+e %+e )\n',arcs');
-% fprintf(fid,'\n\n);\n\n');
-% 
-% % write boundaries
-% fprintf(fid,'boundary\n(\n\n');
-% 
-% fprintf(fid,'\tinlet\n\t{\n\t\ttype patch;\n\t\tfaces\n\t\t(\n');
-% fprintf(fid,'\t\t\t(%2.0f %2.0f %2.0f %2.0f)\n',inlets);
-% fprintf(fid,'\t\t);\n\t}\n\n');
-% 
-% fprintf(fid,'\toutlet\n\t{\n\t\ttype patch;\n\t\tfaces\n\t\t(\n');
-% fprintf(fid,'\t\t\t(%2.0f %2.0f %2.0f %2.0f)\n',outlets);
-% fprintf(fid,'\t\t);\n\t}\n\n');
-% 
-% fprintf(fid,'\tcylinder\n\t{\n\t\ttype wall;\n\t\tfaces\n\t\t(\n');
-% fprintf(fid,'\t\t\t(%2.0f %2.0f %2.0f %2.0f)\n',cylinders);
-% fprintf(fid,'\t\t);\n\t}\n\n');
-% 
-% fprintf(fid,'\ttop\n\t{\n\t\ttype symmetryPlane;\n\t\tfaces\n\t\t(\n');
-% fprintf(fid,'\t\t\t(%2.0f %2.0f %2.0f %2.0f)\n',tops);
-% fprintf(fid,'\t\t);\n\t}\n\n');
-% 
-% fprintf(fid,'\tbottom\n\t{\n\t\ttype symmetryPlane;\n\t\tfaces\n\t\t(\n');
-% fprintf(fid,'\t\t\t(%2.0f %2.0f %2.0f %2.0f)\n',bottoms);
-% fprintf(fid,'\t\t);\n\t}\n\n');
-% 
-% fprintf(fid,');');
-% 
-% fclose(fid);
-% 
-% end
+end
+
+function [bottoms] = bottom(blocks,v)
+bottoms = [0 1 12 11];
+end
+
+function [obstacles] = obstacles(blocks,v)
+obstacles = [4 12 13 5; 5 13 15 7; 1 2 13 12; 2 6 14 10]
+end
+ 
+function publish(blocks,v,inlets,outlets,tops,bottoms,obstacles)
+
+fid = fopen('blockMesh','wt');
+% write header
+fprintf(fid,'// Mesh generated on 08-Mar-2021\n');
+fprintf(fid,'// Local directory: /Users/fbisetti/teaching/ASE347/SP-2021/OF-assignments/of2/simulations/mesh\n');
+fprintf(fid,'// Username: fbisetti\n\n\n');
+
+fprintf(fid,'// Lf (fore)  =  4.00000e+00\n');
+fprintf(fid,'// Lw (wake)  =  6.00000e+00\n');
+fprintf(fid,'// R  (outer) =  1.00000e+00\n');
+fprintf(fid,'// H  (top/bottom) = 4.00000\n\n');
+
+fprintf(fid,'FoamFile\n');
+fprintf(fid,'{\n\tversion  2.0;\n\tformat   ascii;\n\tclass    dictionary;\n\tobject   blockMeshDict;\n}\n\n');
+
+fprintf(fid,'convertToMeters 1.0;\n\n');
+
+% write verticies
+fprintf(fid,'vertices\n(\n');
+fprintf(fid,'\t( %e %e %e ) // %1.0f\n',v(:,1:4)');
+fprintf(fid,');\n\n');
+
+% write blocks
+fprintf(fid,'blocks\n(\n\n');
+fprintf(fid,'\t// block %1.0f \n\thex (%2.0f %2.0f %2.0f %2.0f %2.0f %2.0f %2.0f %2.0f) ( %2.0f %2.0f %2.0f) simpleGrading ( %e %e %3.1f)\n',[blocks(:,end) blocks(:,1:(end-1))]');
+fprintf(fid,'\n);\n\n');
+
+% write edges
+fprintf(fid,'edges\n(\n\n');
+fprintf(fid,'\n\n);\n\n');
+
+% write boundaries
+fprintf(fid,'boundary\n(\n\n');
+
+fprintf(fid,'\tinlet\n\t{\n\t\ttype patch;\n\t\tfaces\n\t\t(\n');
+fprintf(fid,'\t\t\t(%2.0f %2.0f %2.0f %2.0f)\n',inlets);
+fprintf(fid,'\t\t);\n\t}\n\n');
+
+fprintf(fid,'\toutlet\n\t{\n\t\ttype patch;\n\t\tfaces\n\t\t(\n');
+fprintf(fid,'\t\t\t(%2.0f %2.0f %2.0f %2.0f)\n',outlets);
+fprintf(fid,'\t\t);\n\t}\n\n');
+
+fprintf(fid,'\tbottom\n\t{\n\t\ttype symmetryPlane;\n\t\tfaces\n\t\t(\n');
+fprintf(fid,'\t\t\t(%2.0f %2.0f %2.0f %2.0f)\n',bottoms);
+fprintf(fid,'\t\t);\n\t}\n\n');
+
+fprintf(fid,'\ttop\n\t{\n\t\ttype symmetryPlane;\n\t\tfaces\n\t\t(\n');
+fprintf(fid,'\t\t\t(%2.0f %2.0f %2.0f %2.0f)\n',tops);
+fprintf(fid,'\t\t);\n\t}\n\n');
+
+fprintf(fid,'\tobstacles\n\t{\n\t\ttype wall;\n\t\tfaces\n\t\t(\n');
+fprintf(fid,'\t\t\t(%2.0f %2.0f %2.0f %2.0f)\n',obstacles);
+fprintf(fid,'\t\t);\n\t}\n\n');
+
+fprintf(fid,');');
+
+fclose(fid);
+
+end
