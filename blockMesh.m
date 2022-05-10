@@ -191,11 +191,11 @@ tops = [3 11 12 4];
 end
 
 function [bottoms] = bottom(blocks,v)
-bottoms = [0 1 12 11];
+bottoms = [0 1 9 8];
 end
 
 function [obstacles] = obstacles(blocks,v)
-obstacles = [4 12 13 5; 5 13 15 7; 1 2 13 12; 2 6 14 10]
+obstacles = [4 12 13 5; 5 13 15 7; 1 9 10 2; 2 10 14 6]
 end
  
 function publish(blocks,v,inlets,outlets,tops,bottoms,obstacles)
@@ -249,8 +249,8 @@ fprintf(fid,'\ttop\n\t{\n\t\ttype symmetryPlane;\n\t\tfaces\n\t\t(\n');
 fprintf(fid,'\t\t\t(%2.0f %2.0f %2.0f %2.0f)\n',tops);
 fprintf(fid,'\t\t);\n\t}\n\n');
 
-fprintf(fid,'\tobstacles\n\t{\n\t\ttype wall;\n\t\tfaces\n\t\t(\n');
-fprintf(fid,'\t\t\t(%2.0f %2.0f %2.0f %2.0f)\n',obstacles);
+fprintf(fid,'\tobstacles\n\t{\n\t\ttype patch;\n\t\tfaces\n\t\t(\n');
+fprintf(fid,'\t\t\t(%2.0f %2.0f %2.0f %2.0f)\n',obstacles');
 fprintf(fid,'\t\t);\n\t}\n\n');
 
 fprintf(fid,');');
