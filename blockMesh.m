@@ -9,8 +9,8 @@ free_stream_length= 0.6;
 tunnel_height = 0.6;
 total_length = 6;
 
-nx = 24*2*2;
-ny = 32*2*2;
+nx = 24^3;
+ny = 32^3;
 nz = 1;
 
 vert = vertecies(inlet_height,free_stream_length,tunnel_height, total_length, theta)
