@@ -4,13 +4,14 @@
 % 
 % 
 inlet_height = 1;
-theta = pi/36;
+degrees = 45;
+theta = pi*degrees/180;
 free_stream_length= 0.6;
 tunnel_height = 0.6;
 total_length = 6;
 
-nx = 24*1;
-ny = 32*1;
+nx = 24*3;
+ny = 32*3;
 nz = 1;
 
 vert = vertecies(inlet_height,free_stream_length,tunnel_height, total_length, theta)
@@ -201,7 +202,7 @@ end
  
 function publish(blocks,v,inlets,outlets,tops,bottoms,obstacles)
 
-fid = fopen('blockMesh.5.A','wt');
+fid = fopen('blockMesh.45.C','wt');
 % write header
 fprintf(fid,'// Mesh generated on 08-Mar-2021\n');
 fprintf(fid,'// Local directory: /Users/fbisetti/teaching/ASE347/SP-2021/OF-assignments/of2/simulations/mesh\n');
@@ -259,3 +260,5 @@ fprintf(fid,');');
 fclose(fid);
 
 end
+
+
