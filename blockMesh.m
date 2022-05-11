@@ -7,17 +7,17 @@ clear all
 clc
 
 inlet_height = 1;
-degrees = 35;
+degrees = 20;
 theta = pi*degrees/180;
 free_stream_length= 0.6;
 tunnel_height = 0.6;
-total_length = 6;
+total_length = 3;
 
-nx = 24*2*2;
-ny = 32*2*2;
+nx = 24;
+ny = 32;
 nz = 1;
 
-filename = 'blockmesh.35.C'
+filename = 'blockmesh.' + string(degrees) + '.A';
 
 vert = vertecies(inlet_height,free_stream_length,tunnel_height, total_length, theta)
 bloc = block(nx,ny,nz,theta)
@@ -135,7 +135,7 @@ length_b2 = floor(0.2/(tan(theta)*0.6))+1;
 % local cell number and simpleGrading 
 blocks(1,9:11) = [nx,ny,nz]; 
 blocks(2,9:11) = [nx*length_b2,ny,nz]; 
-blocks(3,9:11) = [nx*(9-length_b2),ny,nz];
+blocks(3,9:11) = [nx*(5-length_b2),ny,nz];
 
 blocks(1:3,12:14) = ones(3);
 
