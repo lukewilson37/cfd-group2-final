@@ -42,11 +42,11 @@ blocks
 (
 
 	// block 0 
-	hex ( 0  1  4  3  8  9 12 11) ( 72 96  1) simpleGrading ( 1.000000e+00 1.000000e+00 1.0)
+	hex ( 0  1  4  3  8  9 12 11) ( 96 128  1) simpleGrading ( 1.000000e+00 1.000000e+00 1.0)
 	// block 1 
-	hex ( 1  2  5  4  9 10 13 12) ( 72 96  1) simpleGrading ( 1.000000e+00 1.000000e+00 1.0)
+	hex ( 1  2  5  4  9 10 13 12) ( 192 128  1) simpleGrading ( 1.000000e+00 1.000000e+00 1.0)
 	// block 2 
-	hex ( 2  6  7  5 10 14 15 13) ( 288 96  1) simpleGrading ( 1.000000e+00 1.000000e+00 1.0)
+	hex ( 2  6  7  5 10 14 15 13) ( 672 128  1) simpleGrading ( 1.000000e+00 1.000000e+00 1.0)
 
 );
 
@@ -96,7 +96,7 @@ boundary
 		);
 	}
 
-	obstacles
+	obstacle
 	{
 		type patch;
 		faces
