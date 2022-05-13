@@ -1,0 +1,86 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 7-49b2b3b8b082
+Exec   : blockMesh
+Date   : May 12 2022
+Time   : 10:45:57
+Host   : "c402-032.stampede2.tacc.utexas.edu"
+PID    : 60773
+I/O    : uncollated
+Case   : /work2/07658/ig7235/stampede2/mainclassrepo/OpenFOAM/v7/mach-3-ramp-20-N
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Creating block mesh from
+    "/work2/07658/ig7235/stampede2/mainclassrepo/OpenFOAM/v7/mach-3-ramp-20-N/system/blockMeshDict"
+Creating block edges
+No non-planar block faces defined
+Creating topology blocks
+Creating topology patches
+
+Creating block mesh topology
+--> FOAM Warning : 
+    From function Foam::polyMesh::polyMesh(const Foam::IOobject &, Foam::Field<Foam::Vector<double>> &&, const Foam::List<Foam::cellShape> &, const Foam::List<Foam::List<Foam::face>> &, const Foam::List<Foam::word> &, const Foam::PtrList<Foam::dictionary> &, const Foam::word &, const Foam::word &, bool)
+    in file meshes/polyMesh/polyMeshFromShapeMesh.C at line 873
+    Found 6 undefined faces in mesh; adding to default patch.
+
+Check topology
+
+	Basic statistics
+		Number of internal faces : 2
+		Number of boundary faces : 14
+		Number of defined boundary faces : 14
+		Number of undefined boundary faces : 0
+	Checking patch -> block consistency
+
+Creating block offsets
+Creating merge list .
+
+Creating polyMesh from blockMesh
+Creating points with scale 1
+    Block 0 cell size :
+        i : 0.025 .. 0.025
+        j : 0.03125
+        k : 0.1
+    Block 1 cell size :
+        i : 0.024365 .. 0.024365 0.0241918 .. 0.0241918 0.024365 .. 0.024365 0.0241918 .. 0.0241918 
+        j : 0.03125 0.0307292 .. 0.0307292 0.03125 0.0307292 .. 0.0307292 
+        k : 0.1
+    Block 2 cell size :
+        i : 0.0192761 .. 0.0192761
+        j : 0.01875 .. 0.01875
+        k : 0.1
+Creating cells
+Creating patches
+
+Writing polyMesh
+----------------
+Mesh Information
+----------------
+  boundingBox: (0 0 -0.05) (3 1 0.05)
+  nPoints: 9570
+  nCells: 4608
+  nFaces: 18608
+  nInternalFaces: 9040
+----------------
+Patches
+----------------
+  patch 0 (start: 9040 size: 32) name: inlet
+  patch 1 (start: 9072 size: 32) name: outlet
+  patch 2 (start: 9104 size: 24) name: bottom
+  patch 3 (start: 9128 size: 24) name: top
+  patch 4 (start: 9152 size: 240) name: obstacle
+  patch 5 (start: 9392 size: 9216) name: defaultFaces
+
+End
+

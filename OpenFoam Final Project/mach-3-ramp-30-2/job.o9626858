@@ -1,0 +1,6 @@
+/work2/07658/ig7235/stampede2/mainclassrepo/OpenFOAM/current/mach-3-ramp-30-2
+Thu May 12 12:56:00 CDT 2022
+Running blockMesh on /work2/07658/ig7235/stampede2/mainclassrepo/OpenFOAM/current/mach-3-ramp-30-2
+Running checkMesh on /work2/07658/ig7235/stampede2/mainclassrepo/OpenFOAM/current/mach-3-ramp-30-2
+Running rhoCentralFoam on /work2/07658/ig7235/stampede2/mainclassrepo/OpenFOAM/current/mach-3-ramp-30-2
+Thu May 12 15:05:32 CDT 2022

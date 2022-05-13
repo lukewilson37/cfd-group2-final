@@ -1,0 +1,5 @@
+/work2/07658/ig7235/stampede2/mainclassrepo/OpenFOAM/current/mach-3-ramp-20-Nx4
+Thu May 12 11:35:06 CDT 2022
+blockMesh already run on /work2/07658/ig7235/stampede2/mainclassrepo/OpenFOAM/current/mach-3-ramp-20-Nx4: remove log file 'log.blockMesh' to re-run
+checkMesh already run on /work2/07658/ig7235/stampede2/mainclassrepo/OpenFOAM/current/mach-3-ramp-20-Nx4: remove log file 'log.checkMesh' to re-run
+Running rhoCentralFoam on /work2/07658/ig7235/stampede2/mainclassrepo/OpenFOAM/current/mach-3-ramp-20-Nx4
